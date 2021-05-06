@@ -1,3 +1,4 @@
+import apply from './components/apply.vue'
 import vueRouter from 'vue-router'
 import login from './components/login.vue'
 
@@ -6,6 +7,9 @@ const routerInstance = new vueRouter({
     routes: [
         {
             path: '/', component: login
+        },
+        {
+            path: '/apply', component: apply
         }
     ]
 })
