@@ -4,7 +4,7 @@
       <template slot="label">
         <div style="color: #25b864">新密码:</div>
       </template>
-      <el-input :class="isError" v-model="newp" show-password></el-input>
+      <el-input :class="isError" v-model="newp" show-password placeholder="请输入新密码"></el-input>
     </el-form-item>
     <el-form-item>
       <template slot="label">
@@ -15,6 +15,7 @@
         :class="isError"
         v-model="comfirmp"
         show-password
+        placeholder="请确认新密码"
       ></el-input>
     </el-form-item>
   </div>

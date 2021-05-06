@@ -6,26 +6,30 @@
       <big-title fontColor="#fff">我的农产品, 它从哪里来?</big-title>
       <el-card class="login-panel">
         <el-form :model="loginData" label-width="100px">
-          <div v-if="loginPanel">
+          <div v-show="loginPanel">
             <el-form-item>
               <template slot="label">
                 <div style="color: #25b864">账户地址:</div>
               </template>
-              <el-input v-model="loginData.address"></el-input>
+              <el-input
+                v-model="loginData.address"
+                placeholder="请填写以太网账户地址"
+              ></el-input>
             </el-form-item>
             <el-form-item>
               <template slot="label">
                 <div style="color: #25b864">账户解锁密码:</div>
               </template>
               <el-input
-                v-model="loginData.loginPasswd"
+                v-model="loginData.passwd"
                 show-password
+                placeholder="请输入解锁密码"
               ></el-input>
             </el-form-item>
             <el-button type="primary" plain @click="login">登录系统</el-button>
             <el-button type="info" @click="register">一键注册</el-button>
           </div>
-          <div v-else>
+          <div v-show="!loginPanel">
             <!-- 密码框组件 -->
             <Password @validate="getPsdState"></Password>
             <el-button
@@ -65,31 +69,38 @@ export default {
   data: function () {
     return {
       loginData: {
-        address: "0x07F6709b26696C69AC84b4dc3f188625DEc3fA1A",
+        address: "",
+        passwd: "",
       },
       loginPanel: true,
       cantSumbit: true,
-      newp: ''
+      newp: "",
     };
   },
   methods: {
-    async login() {
-      const res = await http.get("/");
-      console.log(res);
-    },
+    async login() {},
     async register() {
       this.loginPanel = false;
     },
     async backLogin() {
       this.loginPanel = true;
     },
+    // 注册函数
     async sumbit() {
-      console.log(this.newp)
+      const res = await http.post("/account/create", { passwd: this.newp });
+      http.cus.downLoadFromBlob(
+        new Blob([JSON.stringify(res.data.data, null, "\t")], {
+          type: "application/json",
+        }),
+        `keystore-${new Date().getTime()}.json`
+      );
+      // 自动调整login, 并填充数据
+      this.loginPanel = true;
+      this.$set(this.loginData, "address", res.data.data.address);
+      this.$set(this.loginData, "passwd", this.newp);
     },
     getPsdState(emitData) {
-      console.log(emitData)
       if (emitData.vdt) {
-        console.log(this.cantSumbit)
         this.cantSumbit = false;
         this.newp = emitData.value;
       } else {
