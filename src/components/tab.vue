@@ -67,13 +67,14 @@
               placeholder="TODO: 文件hash地址"
             ></el-input>
           </el-form-item>
-          <el-button class="first-sumbit" type="primary" @click="onSubmit" plain
+          <el-button class="first-sumbit" type="primary" plain
             >提交申请</el-button
           >
         </el-form>
       </div>
     </el-tab-pane>
     <el-tab-pane label="交易管理" name="second">配置管理</el-tab-pane>
+
     <el-tab-pane class="el-tab-pane-botton" label="商品溯源" name="third">
       <div class="block">
         <!--搜索框-->
@@ -126,6 +127,35 @@
       </div>
     </el-tab-pane>
     <el-tab-pane label="农产品市场" name="fourth">定时任务补偿</el-tab-pane>
+    <el-tab-pane label="用户管理" name="five">
+      <el-table :data="userManagerTableData" border style="width: 100%">
+        <el-table-column fixed prop="name" label="用户名" width="150">
+        </el-table-column>
+        <el-table-column prop="role" label="角色" width="100">
+        </el-table-column>
+        <el-table-column prop="address" label="以太网账户地址" width="380">
+        </el-table-column>
+        <el-table-column prop="date" label="加入日期" width="120">
+        </el-table-column>
+        <el-table-column prop="desc" label="用户描述" width="300">
+        </el-table-column>
+        <el-table-column prop="reviewState" label="审核状态" width="120">
+        </el-table-column>
+        <el-table-column prop="reviewFileHref" label="商家文件" width="380">
+        </el-table-column>
+        <el-table-column fixed="right" label="操作" width="100">
+          <template slot-scope="scope">
+            <el-button
+              :disabled="fiveReviewDisable(scope.row)"
+              @click="handleClick(scope.row)"
+              type="text"
+              size="small"
+              >确认通过审核</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-tab-pane>
   </el-tabs>
 </template>
 <script>
@@ -133,6 +163,53 @@ export default {
   name: "Tab",
   data() {
     return {
+      userManagerTableData: [
+        {
+          address: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
+          role: "0",
+          name: "西瓜供应商",
+          date: "2020/04/06",
+          desc: "又甜又好吃的大西瓜",
+          reviewState: "审核通过",
+          reviewFileHref: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
+        },
+        {
+          address: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
+          role: "0",
+          name: "西瓜供应商",
+          date: "2020/04/06",
+          desc: "又甜又好吃的大西瓜",
+          reviewState: "未审核",
+          reviewFileHref: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
+        },
+        {
+          address: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
+          role: "0",
+          name: "西瓜供应商",
+          date: "2020/04/06",
+          desc: "又甜又好吃的大西瓜",
+          reviewState: "审核通过",
+          reviewFileHref: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
+        },
+                {
+          address: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
+          role: "0",
+          name: "西瓜供应商",
+          date: "2020/04/06",
+          desc: "又甜又好吃的大西瓜",
+          reviewState: "审核通过",
+          reviewFileHref: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
+        },
+                {
+          address: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
+          role: "0",
+          name: "西瓜供应商",
+          date: "2020/04/06",
+          desc: "又甜又好吃的大西瓜",
+          reviewState: "审核通过",
+          reviewFileHref: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
+        },
+      ],
       form: {
         foodName: "",
         advertiseSlogan: "",
@@ -144,7 +221,7 @@ export default {
         detailFoodFileHref: "",
       },
       searchFoodId: "",
-      activeName: "first",
+      activeName: "five",
       foodinfo: {
         foodId: "0xdfdsfsdf",
         foodName: "l",
@@ -183,6 +260,9 @@ export default {
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
+    },
+    fiveReviewDisable(row) {
+      return row.reviewState === "审核通过";
     },
   },
 };
