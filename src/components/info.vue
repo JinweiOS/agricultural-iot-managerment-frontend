@@ -1,6 +1,9 @@
 <template>
   <div>
     <Wallet></Wallet>
+    <div>
+      
+    </div>
   </div>
 </template>
 <script>

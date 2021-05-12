@@ -3,13 +3,15 @@
     <el-form class="user-info">
       <BigTitle fontSize="15">{{ name }}</BigTitle>
       <el-button>{{ address }}</el-button>
-      <el-divider content-position="right"><i class="el-icon-user"></i></el-divider>
-      <BigTitle fontSize="15">当前资产</BigTitle>
-      <div>
-        <el-button>{{ coin }}</el-button
-        >&emsp;ETH
-      </div>
-      <el-divider content-position="right"><i class="el-icon-coin"></i></el-divider>
+      <el-divider content-position="right"
+        ><i class="el-icon-user"></i
+      ></el-divider>
+      <BigTitle fontSize="15">当前资产&emsp;&emsp;<el-tag type="success">{{ coin }}</el-tag>
+        &emsp;ETH</BigTitle>
+
+      <el-divider content-position="right"
+        ><i class="el-icon-coin"></i
+      ></el-divider>
       <el-button type="danger" plain class="exit-button">退出</el-button>
     </el-form>
   </el-card>
@@ -40,7 +42,7 @@ export default {
 }
 
 .box-card {
-  width: 25%;
+  width: 100%;
 }
 .user-info {
   display: flex;

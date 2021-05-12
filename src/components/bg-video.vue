@@ -8,7 +8,7 @@
       muted
       loop
       autoplay
-      src="//static.yximgs.com/udata/pkg/fe/kwai_video.a7616d99.mp4"
+      src="../assets/miui.mp4"
       type="video/mp4">
       抱歉，你的浏览器不支持内嵌视频
     </video>
@@ -18,6 +18,15 @@
 <script>
 export default {
   name: "BackgroudVideo",
+  data: function() {
+    return {
+      bgs: {
+        kuaiVideo: '//static.yximgs.com/udata/pkg/fe/kwai_video.a7616d99.mp4',
+        littleBookVideo: 'https://dc.xhscdn.com/9379abe0-7ad8-11e9-8794-9320f6c9d557/%E8%83%8C%E6%99%AF%E8%A7%86%E9%A2%91.mp4',
+        miuiVideo: '../assets/miui.mp4'
+      }
+    }
+  }
 };
 </script>
 

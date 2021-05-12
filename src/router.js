@@ -2,6 +2,8 @@ import apply from './components/apply.vue'
 import vueRouter from 'vue-router'
 import login from './components/login.vue'
 import info from './components/info.vue'
+import tab from './components/tab.vue'
+import panel from './components/panel.vue'
 
 // 实例化路由
 const routerInstance = new vueRouter({
@@ -14,6 +16,12 @@ const routerInstance = new vueRouter({
         },
         {
             path: '/info', component: info
+        },
+        {
+            path:'/tab', component: tab
+        },
+        {
+            path: '/panel', component: panel
         }
     ]
 })
