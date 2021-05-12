@@ -22,9 +22,9 @@ export default {
   justify-content: center;
 }
 .tab {
-    width: 60%;
-    margin-top: 10px;
-    margin-bottom: 20px;
+  width: 60%;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 .wallet {
   width: 25%;

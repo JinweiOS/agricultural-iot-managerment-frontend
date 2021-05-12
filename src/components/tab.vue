@@ -126,7 +126,39 @@
         </el-timeline>
       </div>
     </el-tab-pane>
-    <el-tab-pane label="农产品市场" name="fourth">定时任务补偿</el-tab-pane>
+    <el-tab-pane label="农产品市场" name="fourth">
+      <el-table :data="foodMarketTableData" border style="width: 100%">
+        <el-table-column fixed prop="owner" label="供应商" width="150">
+        </el-table-column>
+        <el-table-column prop="foodName" label="产品名称" width="100">
+        </el-table-column>
+        <el-table-column prop="advertiseSlogan" label="广告语" width="380">
+        </el-table-column>
+        <el-table-column prop="eatMethods" label="使用方法" width="120">
+        </el-table-column>
+        <el-table-column prop="location" label="产地" width="300">
+        </el-table-column>
+        <el-table-column prop="storageCondition" label="贮藏条件" width="120">
+        </el-table-column>
+        <el-table-column
+          prop="detailFoodFileHref"
+          label="产品详细描述文件"
+          width="380"
+        >
+        </el-table-column>
+        <el-table-column fixed="right" label="操作" width="100">
+          <template slot-scope="scope">
+            <el-button
+              :disabled="fiveReviewDisable(scope.row)"
+              @click="handleClick(scope.row)"
+              type="text"
+              size="small"
+              >发起交易</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-tab-pane>
     <el-tab-pane label="用户管理" name="five">
       <el-table :data="userManagerTableData" border style="width: 100%">
         <el-table-column fixed prop="name" label="用户名" width="150">
@@ -191,7 +223,7 @@ export default {
           reviewState: "审核通过",
           reviewFileHref: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
         },
-                {
+        {
           address: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
           role: "0",
           name: "西瓜供应商",
@@ -200,7 +232,7 @@ export default {
           reviewState: "审核通过",
           reviewFileHref: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
         },
-                {
+        {
           address: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
           role: "0",
           name: "西瓜供应商",
@@ -210,6 +242,15 @@ export default {
           reviewFileHref: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
         },
       ],
+      foodMarketTableData: [{
+        owner: '彭仅为',
+        foodName: '苹果',
+        advertiseSlogan: '广告语',
+        eatMethods: '喜喜就可以吃',
+        location: '产地',
+        storageCondition: '可以放一个月',
+        detailFoodFileHref: '0xxxxxxx'
+      }],
       form: {
         foodName: "",
         advertiseSlogan: "",
@@ -221,7 +262,7 @@ export default {
         detailFoodFileHref: "",
       },
       searchFoodId: "",
-      activeName: "five",
+      activeName: "fourth",
       foodinfo: {
         foodId: "0xdfdsfsdf",
         foodName: "l",
