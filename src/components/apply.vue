@@ -5,8 +5,9 @@
     <el-form :model="form" label-width="140px">
       <el-form-item label="商家以太网地址: ">
         <el-input
-          v-model="form.name"
+          v-model="form.address"
           placeholder="例如: 0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc"
+          disabled
         ></el-input>
       </el-form-item>
       <el-form-item label="商家名称: ">
@@ -17,9 +18,9 @@
       </el-form-item>
       <el-form-item label="注册商家类型: ">
         <el-radio-group v-model="form.role">
-          <el-radio label="农产品供应商"></el-radio>
-          <el-radio label="农产品分销商"></el-radio>
-          <el-radio label="农产品零售商"></el-radio>
+          <el-radio label="0">农产品供应商</el-radio>
+          <el-radio label="1">农产品供应商</el-radio>
+          <el-radio label="2">农产品供应商</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="商家地址: ">
@@ -40,37 +41,55 @@
           placeholder="TODO: 用户上传文件自动生成"
         ></el-input>
       </el-form-item>
-      <el-button class="sumbit" type="primary" @click="onSubmit" plain
+      <el-button
+        class="sumbit"
+        type="primary"
+        @click="onSubmit"
+        plain
+        :disabled="disabled"
         >提交申请</el-button
       >
     </el-form>
   </div>
 </template>
 <script>
+import http from "../utils/http-service";
 import BigTitle from "./cos-title";
 export default {
   data() {
     return {
       form: {
         name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
+        address: "",
+        role: "",
+        location: "",
         desc: "",
+        reviewFileHref: "",
+        review: "wait",
       },
+      disabled: false,
     };
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
+    async onSubmit() {
+      const res = await http.post("/account/registry", this.form);
+      console.log(res);
+      if (res.data.data.success) {
+        this.disabled = true;
+      }
+      this.$notify({
+        title: "等待审核通知",
+        message: "您已提交用户审核, 请耐心等待监管部门审核！",
+        type: "warning",
+      });
     },
   },
   name: "Apply",
   components: {
     BigTitle,
+  },
+  created() {
+    this.form.address = this.$route.query.address;
   },
 };
 </script>

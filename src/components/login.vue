@@ -78,7 +78,34 @@ export default {
     };
   },
   methods: {
-    async login() {},
+    async login() {
+      sessionStorage.setItem('address', this.loginData.address);
+      sessionStorage.setItem('passwd', this.loginData.passwd);
+      if (this.loginData.address !== "" && this.loginData.passwd !== "") {
+        const res = await http.get("/account/user/now");
+        //'0xB9Eb46AEC2b2114512db29cea7963617Fe5e3689'
+        // 非认证角色role为5, 监管节点为3
+        if (res.data.data[6] === '3') {
+          this.$router.push({path: '/panel', query: {role: 3}});
+          return;
+        }
+        console.log(res.data.data);
+        if (res.data.data[7] === "null" || res.data.data[7] === '') {
+          this.$router.push({
+            path: "/apply",
+            query: { address: this.loginData.address },
+          });
+        } else if (res.data.data[7] === "wait") {
+          this.$notify({
+            title: "等待审核通知",
+            message: "您已提交用户审核, 请耐心等待监管部门审核！",
+            type: "warning",
+          });
+        } else {
+          this.$router.push("/panel");
+        }
+      }
+    },
     async register() {
       this.loginPanel = false;
     },

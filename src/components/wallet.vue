@@ -6,8 +6,10 @@
       <el-divider content-position="right"
         ><i class="el-icon-user"></i
       ></el-divider>
-      <BigTitle fontSize="15">当前资产&emsp;&emsp;<el-tag type="success">{{ coin }}</el-tag>
-        &emsp;ETH</BigTitle>
+      <BigTitle fontSize="15"
+        >当前资产&emsp;&emsp;<el-tag type="success">{{ coin }}</el-tag>
+        &emsp;ETH</BigTitle
+      >
 
       <el-divider content-position="right"
         ><i class="el-icon-coin"></i
@@ -23,13 +25,7 @@ export default {
   components: {
     BigTitle,
   },
-  data: function () {
-    return {
-      name: "车厘子供应商",
-      address: "0x12345676ewdfg345yujhgfdser5d",
-      coin: "30",
-    };
-  },
+  props: ["name", "address", "coin"],
 };
 </script>
 <style>

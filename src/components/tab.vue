@@ -6,7 +6,7 @@
     type="border-card"
     :stretch="true"
   >
-    <el-tab-pane label="农产品信息管理" name="first">
+    <el-tab-pane label="农产品信息管理" name="first" v-if="config[0]">
       <div class="first-container">
         <div class="first-title">
           <h1>商品注册表</h1>
@@ -73,9 +73,16 @@
         </el-form>
       </div>
     </el-tab-pane>
-    <el-tab-pane label="交易管理" name="second">配置管理</el-tab-pane>
+    <el-tab-pane label="交易管理" name="second" v-if="config[1]"
+      >配置管理</el-tab-pane
+    >
 
-    <el-tab-pane class="el-tab-pane-botton" label="商品溯源" name="third">
+    <el-tab-pane
+      class="el-tab-pane-botton"
+      label="商品溯源"
+      name="third"
+      v-if="config[2]"
+    >
       <div class="block">
         <!--搜索框-->
         <el-input
@@ -126,7 +133,7 @@
         </el-timeline>
       </div>
     </el-tab-pane>
-    <el-tab-pane label="农产品市场" name="fourth">
+    <el-tab-pane label="农产品市场" name="fourth" v-if="config[3]">
       <el-table :data="foodMarketTableData" border style="width: 100%">
         <el-table-column fixed prop="owner" label="供应商" width="150">
         </el-table-column>
@@ -159,7 +166,7 @@
         </el-table-column>
       </el-table>
     </el-tab-pane>
-    <el-tab-pane label="用户管理" name="five">
+    <el-tab-pane label="用户管理" name="five" v-if="config[4]">
       <el-table :data="userManagerTableData" border style="width: 100%">
         <el-table-column fixed prop="name" label="用户名" width="150">
         </el-table-column>
@@ -191,14 +198,17 @@
   </el-tabs>
 </template>
 <script>
+import http from '../utils/http-service';
 export default {
   name: "Tab",
   data() {
     return {
+      userInfo: {},
+      config: [false, false, false, false, false],
       userManagerTableData: [
         {
           address: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
-          role: "0",
+          role: "供应商",
           name: "西瓜供应商",
           date: "2020/04/06",
           desc: "又甜又好吃的大西瓜",
@@ -206,51 +216,62 @@ export default {
           reviewFileHref: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
         },
         {
-          address: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
-          role: "0",
-          name: "西瓜供应商",
+          address: "0xFeFcA80cC595660595dAA402964122828463F677",
+          role: "生产商",
+          name: "哇哈哈玉米",
           date: "2020/04/06",
-          desc: "又甜又好吃的大西瓜",
-          reviewState: "未审核",
-          reviewFileHref: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
-        },
-        {
-          address: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
-          role: "0",
-          name: "西瓜供应商",
-          date: "2020/04/06",
-          desc: "又甜又好吃的大西瓜",
-          reviewState: "审核通过",
-          reviewFileHref: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
-        },
-        {
-          address: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
-          role: "0",
-          name: "西瓜供应商",
-          date: "2020/04/06",
-          desc: "又甜又好吃的大西瓜",
-          reviewState: "审核通过",
-          reviewFileHref: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
-        },
-        {
-          address: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
-          role: "0",
-          name: "西瓜供应商",
-          date: "2020/04/06",
-          desc: "又甜又好吃的大西瓜",
-          reviewState: "审核通过",
+          desc: "东北粘玉米",
+          reviewState: "未通过审核",
           reviewFileHref: "0xebD219C152cBd7F73C31229e9B4846B3a1e5ACEc",
         },
       ],
-      foodMarketTableData: [{
-        owner: '彭仅为',
-        foodName: '苹果',
-        advertiseSlogan: '广告语',
-        eatMethods: '喜喜就可以吃',
-        location: '产地',
-        storageCondition: '可以放一个月',
-        detailFoodFileHref: '0xxxxxxx'
-      }],
+      foodMarketTableData: [
+        {
+          owner: "红富士总店",
+          foodName: "苹果",
+          advertiseSlogan: "广告语",
+          eatMethods: "喜喜就可以吃",
+          location: "产地",
+          storageCondition: "可以放一个月",
+          detailFoodFileHref: "0xxxxxxx",
+        },
+        {
+          owner: "大白梨",
+          foodName: "砀山梨子",
+          advertiseSlogan: "天然的梨树生长环境，离子又大又甜",
+          eatMethods: "喜喜就可以吃",
+          location: "产地",
+          storageCondition: "可以放一个月",
+          detailFoodFileHref: "0xxxxxxx",
+        },
+        {
+          owner: "山东烟台栖霞红富士",
+          foodName: "苹果",
+          advertiseSlogan: "80-85mm大果金钟5斤",
+          eatMethods: "喜喜就可以吃",
+          location: "产地",
+          storageCondition: "可以放一个月",
+          detailFoodFileHref: "0xxxxxxx",
+        },
+        {
+          owner: "京东京造星果乐",
+          foodName: "苹果",
+          advertiseSlogan: "陕北高原洛川苹果17钻石果",
+          eatMethods: "喜喜就可以吃",
+          location: "产地",
+          storageCondition: "可以放一个月",
+          detailFoodFileHref: "0xxxxxxx",
+        },
+        {
+          owner: "鲜次方",
+          foodName: "桃子",
+          advertiseSlogan: "黄心油桃新鲜水果香甜",
+          eatMethods: "喜喜就可以吃",
+          location: "产地",
+          storageCondition: "可以放一个月",
+          detailFoodFileHref: "0xxxxxxx",
+        },
+      ],
       form: {
         foodName: "",
         advertiseSlogan: "",
@@ -265,32 +286,16 @@ export default {
       activeName: "fourth",
       foodinfo: {
         foodId: "0xdfdsfsdf",
-        foodName: "l",
+        foodName: "水蜜桃",
         location: "江苏省镇江市",
-        owner: "王莹莹",
-        detailFoodFileHref: "www.baidu.com",
+        owner: "彭金为",
+        detailFoodFileHref: "0x39sdf2093jfej23jicweoj332ff",
       },
       sources: [
         {
           time: "2020/01/04",
           foodId: "3w9edjfwe0cjsdq032fdsa",
-          toUser: "王莹莹",
-          fromUser: "彭金为",
-          foodName: "车厘子",
-          circulationFileHref: "www.baidu.com",
-        },
-        {
-          time: "2020/01/04",
-          foodId: "3w9edjfwe0cjsdq032fdsa",
-          toUser: "王莹莹",
-          fromUser: "彭金为",
-          foodName: "车厘子",
-          circulationFileHref: "www.baidu.com",
-        },
-        {
-          time: "2020/01/04",
-          foodId: "3w9edjfwe0cjsdq032fdsa",
-          toUser: "王莹莹",
+          toUser: "某商家",
           fromUser: "彭金为",
           foodName: "车厘子",
           circulationFileHref: "www.baidu.com",
@@ -305,6 +310,26 @@ export default {
     fiveReviewDisable(row) {
       return row.reviewState === "审核通过";
     },
+  },
+  async created() {
+    const res = await http.get('/account/user/now');
+    this.userInfo = res.data.data;
+    console.log(this.userInfo)
+    switch (this.userInfo[6]) {
+      case "3":
+        console.log('hahahaha')
+        this.config.splice(0, this.config.length, ...[false, false, true, false, true]);
+        break;
+      case "0":
+        this.config.splice(0, this.config.length, ...[true, true, true, false, false]);
+        break;
+      case "1":
+        this.config.splice(0, this.config.length, ...[false, true, true, true, false]);
+        break;
+      case "2":
+        this.config.splice(0, this.config.length, ...[false, true, true, true, false]);
+        break;
+    }
   },
 };
 </script>
