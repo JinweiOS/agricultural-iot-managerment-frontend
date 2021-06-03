@@ -7,14 +7,14 @@
         ><i class="el-icon-user"></i
       ></el-divider>
       <BigTitle fontSize="15"
-        >当前资产&emsp;&emsp;<el-tag type="success">{{ coin }}</el-tag>
+        >当前资产&emsp;&emsp;<el-tag type="success" style="width: 200px">{{ coin }}</el-tag>
         &emsp;ETH</BigTitle
       >
 
       <el-divider content-position="right"
         ><i class="el-icon-coin"></i
       ></el-divider>
-      <el-button type="danger" plain class="exit-button">退出</el-button>
+      <el-button type="danger" plain class="exit-button" @click="exit">退出</el-button>
     </el-form>
   </el-card>
 </template>
@@ -26,6 +26,11 @@ export default {
     BigTitle,
   },
   props: ["name", "address", "coin"],
+  methods: {
+    exit() {
+      this.$router.push('/')
+    }
+  }
 };
 </script>
 <style>

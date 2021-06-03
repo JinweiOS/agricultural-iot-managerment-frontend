@@ -47,7 +47,7 @@ export default {
   margin-bottom: 20px;
 }
 .wallet {
-  width: 25%;
+  width: 30%;
   margin-top: 10px;
   margin-left: 20px;
   height: 330px;

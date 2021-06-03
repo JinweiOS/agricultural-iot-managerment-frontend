@@ -18,9 +18,9 @@
       </el-form-item>
       <el-form-item label="注册商家类型: ">
         <el-radio-group v-model="form.role">
-          <el-radio label="0">农产品供应商</el-radio>
+          <el-radio label="0">农产品生产商</el-radio>
           <el-radio label="1">农产品供应商</el-radio>
-          <el-radio label="2">农产品供应商</el-radio>
+          <el-radio label="2">农产品零售商</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="商家地址: ">
@@ -35,11 +35,15 @@
           placeholder="例如: 我们是全国十强的车厘子供应商..."
         ></el-input>
       </el-form-item>
-      <el-form-item label="文件哈希地址: ">
-        <el-input
-          v-model="form.reviewFileHref"
-          placeholder="TODO: 用户上传文件自动生成"
-        ></el-input>
+      <el-form-item label="文件: ">
+                    <el-upload
+              action="http://127.0.0.1:3000/file/upload"
+              :auto-upload="true"
+            >
+              <el-button slot="trigger" size="small" type="primary"
+                >选取文件</el-button
+              >
+            </el-upload>
       </el-form-item>
       <el-button
         class="sumbit"
@@ -64,7 +68,7 @@ export default {
         role: "",
         location: "",
         desc: "",
-        reviewFileHref: "",
+        reviewFileHref: "http://127.0.0.1:8081/exchange.docx",
         review: "wait",
       },
       disabled: false,
@@ -82,6 +86,7 @@ export default {
         message: "您已提交用户审核, 请耐心等待监管部门审核！",
         type: "warning",
       });
+      this.$router.push('/')
     },
   },
   name: "Apply",
