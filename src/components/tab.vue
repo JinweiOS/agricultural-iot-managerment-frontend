@@ -163,7 +163,7 @@
                   <br />
                   <strong>描述文件：</strong
                   ><button @click="DownloadM">
-                    {{ foodinfo.detailFoodFileHref }}
+                    牛奶草莓生产文件
                   </button>
                 </div>
               </el-collapse-item>
@@ -179,7 +179,7 @@
             <h4>交易文件:</h4>
             <p class="content-backspace">
               <button @click="DownloadM">
-                {{ source.circulationFileHref }}
+                交易测试文件
               </button>
             </p>
           </el-timeline-item>
@@ -402,9 +402,9 @@ export default {
       });
       console.log(res2, "res2");
       // 4.记录批次信息
-      const res4 = await http.post("/fl/set", {
+      const res4 = await http.post("/fl/input", {
         address: res2.data.data.touser,
-        batchId: res2.data.data.batchId,
+        batchId: res2.data.data.batch,
         foodId: res2.data.data.foodId,
       });
       if (
